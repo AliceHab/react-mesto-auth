@@ -2,7 +2,7 @@ import logo from "../images/logo.svg";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function Header({ email }) {
+function Header({ email, setEmail }) {
   const location = useLocation();
   const { pathname } = location;
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ function Header({ email }) {
   function signOut() {
     localStorage.removeItem("jwt");
     navigate("/signin");
+    setEmail("");
   }
 
   if (pathname === "/signup") {

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import api from "../utils/api";
@@ -58,20 +58,22 @@ function App() {
 
   // Обращение к api за данными пользователя и карточками
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-      })
-      .catch((err) => console.error(err));
+    if (isLoggedIn) {
+      api
+        .getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => console.error(err));
 
-    api
-      .getInitialCards()
-      .then((dataCards) => {
-        setCards(dataCards);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+      api
+        .getInitialCards()
+        .then((dataCards) => {
+          setCards(dataCards);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [isLoggedIn]);
 
   // Обработчики для компонентов попапов
   // Общие
@@ -154,14 +156,16 @@ function App() {
     <div className="App">
       <div className="root">
         <div className="page">
-          <Header email={email} />
+          <Header email={email} setEmail={setEmail} />
           <AppContext.Provider value={{ isLoading, closeAllPopups }}>
             <CurrentUserContext.Provider value={currentUser}>
               <Routes>
                 <Route path="/signup" element={<Register />} />
                 <Route
                   path="/signin"
-                  element={<Login isLoggedIn={isLoggedIn} setIsLogged={setIsLogged} />}
+                  element={
+                    <Login isLoggedIn={isLoggedIn} setIsLogged={setIsLogged} setEmail={setEmail} />
+                  }
                 />
                 <Route
                   path="/"

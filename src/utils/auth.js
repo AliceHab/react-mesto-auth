@@ -1,4 +1,4 @@
-class Api {
+class Auth {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -43,11 +43,11 @@ class Api {
   }
 }
 
-const api = new Api({
+const auth = new Auth({
   baseUrl: "https://auth.nomoreparties.co",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export default api;
+export default auth;

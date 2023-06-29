@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import InfoTooltip from "./InfoTooltip";
 import auth from "../utils/auth";
+import AuthForm from "./AuthForm";
 
 function Register() {
   const { values, handleChange } = useForm({ email: "", password: "" });
@@ -38,42 +39,39 @@ function Register() {
   }
 
   return (
-    <div className="sign">
-      <p className="sign__title">Регистрация</p>
-      <form className="sign__form" onSubmit={handleSubmit}>
-        <input
-          className="sign__input"
-          placeholder="Email"
-          required
-          id="email"
-          name="email"
-          type="text"
-          onChange={handleChange}
-        />
-        <input
-          className="sign__input"
-          placeholder="Пароль"
-          required
-          id="password"
-          name="password"
-          type="password"
-          onChange={handleChange}
-        />
-        <input type="submit" className="sign__button" value="Зарегистрироваться" />
-      </form>
-      <div className="sign__redirect">
-        <p className="sign__link">Уже зарегистрированы?⠀</p>
-        <Link to="/signin" className="sign__link">
-          Войти
-        </Link>
-      </div>
+    <AuthForm
+      handleSubmit={handleSubmit}
+      buttonText={"Зарегистрироваться"}
+      titleText={"Регистрация"}
+      link={"/signin"}
+      linkText={"Войти"}
+      linkTitile={"Уже зарегистрированы?"}
+    >
+      <input
+        className="sign__input"
+        placeholder="Email"
+        required
+        id="email"
+        name="email"
+        type="text"
+        onChange={handleChange}
+      />
+      <input
+        className="sign__input"
+        placeholder="Пароль"
+        required
+        id="password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+      />
       <InfoTooltip
         showInfo={showInfo}
-        isSuccess={isRegister}
         onClick={closeInfo}
         message={textInfo}
+        isSuccess={isRegister}
       />
-    </div>
+    </AuthForm>
   );
 }
 
